@@ -24,7 +24,12 @@ async function iniciarApp() {
   document.querySelectorAll('#nome-usuario-logado, #nome-usuario-logado-admin').forEach((el) => { el.textContent = sessao.usuario; });
   document.querySelectorAll('.btn-logout').forEach((b) => b.addEventListener('click', () => Auth.logout()));
 
-  if (sessao.perfil === 'funcionario') {
+  if (sessao.perfil === 'coletivo') {
+    // Dispositivo compartilhado (Modo Coletivo): não tem funcionário vinculado,
+    // não mostra nome de usuário logado nem depende de "nome-usuario-logado".
+    Utils.mostrar('tela-coletivo');
+    await Coletivo.iniciar(sessao, cfg);
+  } else if (sessao.perfil === 'funcionario') {
     Utils.mostrar('tela-funcionario');
     await Funcionario.iniciar(sessao, cfg);
   } else if (sessao.perfil === 'administrador') {
