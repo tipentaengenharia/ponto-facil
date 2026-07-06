@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ponto Fácil</title>
+<meta name="theme-color" content="#2563eb">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAEeUlEQVR4nO3d3XETQRBF4RVFCKRgEjNhERkpmCB4mKr1Wj+U5TvdfXv2fM88SD3HPSsDpcvL69sGfNW36heA3ggIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICJLv1S/AxZ/fP5768z9//Q16Jb1cTvj/wp5t5fNOWNVZAoqL5pGTxLR4QPnd3Fq7pDUDcujm1pIlLRWQZze3VippkYC6pHO0RkbtA+qYzlH3jBoH1D2do74ZtQxopXSOOmbULKBV0znqlVGnvws7Qz1bt7fZYwP1muksLVZRgw10znq2Jm/cPaAWQ4zj//Z9rzD/2WWyvc5MNxD1XLEdiGNAtsOq5TkWu4A8x2TCcDhez0AmA3r0wGH+8kq4/Jtok7NpYczKJCOLK4x6vsBkaPUBmQyiI4fR1QeE1ooDcvgZaq18gJUBlb/5NdSOsSwg6pmocJg1AVHPdFUjLQiIeoKUDJZPYZBkB8T6CZU/3tSAqCdB8pDzAqKeNJmj5hkIkqSAWD/J0gaeERD1lMgZO1cYJOEBsX4KJQyfDQRJbECsn3LRR8AGgiQwINaPidCDYANBEhUQ68dK3HGwgSAJCYj1YyjoUNhAkBAQJPMD4v6yFXE0bCBICAiSyQFxf5mbfkBsIEgICJKZAXF/tTD3mNhAkBAQJAQEybSAeABqZOJhsYEgISBICAgSAoKEgCAhIEjmBMRn+HZmHRkbCBICgoSAICGga//5IjeT73iz4vKNhV3ENdT0gwgb6AN2zLMICBICgoSAICGgD5o+yRYiIEgI6BpL6Cn8HuiO0dDxIz1VPUJADxHNZ3CFQTInIH6B286sI2MDQUJAkBAQJAQECQFBQkCQTAuIT/KNTDwsNhAkBAQJAUEyMyAeg1qYe0xsIEgICJLJAXGLmZt+QGwgSAgIkvkBcYvZijgaNhAkBARJSEDcYoaCDoUNBElUQCwhK3HHwQaCJDAglpCJ0INgA0ESGxBLqFz0EbCBIAkPiCVUKGH4bCBIMgJiCZXIGXvSBqKhZGkD5wqDJC8gllCazFGnbiAaSpA85OwrjIZC5Y+XZyBICgJiCQUpGWzNBqKh6apGWnaF0dBEhcOsfAaioSlqx1j8EE1DovIB8ikMkvqAyn+G+nIYXX1Am8cg2jEZ2uXl9a36NbzjG5Y+wySdwWID7axG48ltRF4BbX4DsmI4HLuANssxOfAci2NAm+uwCtkOxOsh+haP1bbpDKYbaGc+vmj+b989oK3DEIO0eOPuV9jRea6zFukMDTbQrtFYFb3eZqcNtFt1FfVKZ2gZ0LBSRh3TGRoHNHTPqG86Q/uAho4ZdU9nWCSgoUtGa6QzLBXQzrOklbrZrRnQzqGkJbvZLR7QLr+ktbvZnSWgo7iYThLN0RkDuuvZqk7Yyl0EBEmnvwuDIQKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICguQfzqc+Eown6OwAAAAASUVORK5CYII=">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAEeUlEQVR4nO3d3XETQRBF4RVFCKRgEjNhERkpmCB4mKr1Wj+U5TvdfXv2fM88SD3HPSsDpcvL69sGfNW36heA3ggIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICJLv1S/AxZ/fP5768z9//Q16Jb1cTvj/wp5t5fNOWNVZAoqL5pGTxLR4QPnd3Fq7pDUDcujm1pIlLRWQZze3VippkYC6pHO0RkbtA+qYzlH3jBoH1D2do74ZtQxopXSOOmbULKBV0znqlVGnvws7Qz1bt7fZYwP1muksLVZRgw10znq2Jm/cPaAWQ4zj//Z9rzD/2WWyvc5MNxD1XLEdiGNAtsOq5TkWu4A8x2TCcDhez0AmA3r0wGH+8kq4/Jtok7NpYczKJCOLK4x6vsBkaPUBmQyiI4fR1QeE1ooDcvgZaq18gJUBlb/5NdSOsSwg6pmocJg1AVHPdFUjLQiIeoKUDJZPYZBkB8T6CZU/3tSAqCdB8pDzAqKeNJmj5hkIkqSAWD/J0gaeERD1lMgZO1cYJOEBsX4KJQyfDQRJbECsn3LRR8AGgiQwINaPidCDYANBEhUQ68dK3HGwgSAJCYj1YyjoUNhAkBAQJPMD4v6yFXE0bCBICAiSyQFxf5mbfkBsIEgICJKZAXF/tTD3mNhAkBAQJAQEybSAeABqZOJhsYEgISBICAgSAoKEgCAhIEjmBMRn+HZmHRkbCBICgoSAICGga//5IjeT73iz4vKNhV3ENdT0gwgb6AN2zLMICBICgoSAICGgD5o+yRYiIEgI6BpL6Cn8HuiO0dDxIz1VPUJADxHNZ3CFQTInIH6B286sI2MDQUJAkBAQJAQECQFBQkCQTAuIT/KNTDwsNhAkBAQJAUEyMyAeg1qYe0xsIEgICJLJAXGLmZt+QGwgSAgIkvkBcYvZijgaNhAkBARJSEDcYoaCDoUNBElUQCwhK3HHwQaCJDAglpCJ0INgA0ESGxBLqFz0EbCBIAkPiCVUKGH4bCBIMgJiCZXIGXvSBqKhZGkD5wqDJC8gllCazFGnbiAaSpA85OwrjIZC5Y+XZyBICgJiCQUpGWzNBqKh6apGWnaF0dBEhcOsfAaioSlqx1j8EE1DovIB8ikMkvqAyn+G+nIYXX1Am8cg2jEZ2uXl9a36NbzjG5Y+wySdwWID7axG48ltRF4BbX4DsmI4HLuANssxOfAci2NAm+uwCtkOxOsh+haP1bbpDKYbaGc+vmj+b989oK3DEIO0eOPuV9jRea6zFukMDTbQrtFYFb3eZqcNtFt1FfVKZ2gZ0LBSRh3TGRoHNHTPqG86Q/uAho4ZdU9nWCSgoUtGa6QzLBXQzrOklbrZrRnQzqGkJbvZLR7QLr+ktbvZnSWgo7iYThLN0RkDuuvZqk7Yyl0EBEmnvwuDIQKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICguQfzqc+Eown6OwAAAAASUVORK5CYII=">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<!-- ==================== LOGIN ==================== -->
+<div id="tela-login" class="oculto login-wrap">
+  <div class="login-cartao">
+    <img data-logo-sistema class="oculto" alt="logo">
+    <h1 data-nome-sistema>Ponto Fácil</h1>
+    <form id="form-login">
+      <label for="login-usuario">Usuário</label>
+      <input id="login-usuario" required autocomplete="username">
+      <label for="login-senha">Senha</label>
+      <input id="login-senha" type="password" required autocomplete="current-password">
+      <br><br>
+      <button id="btn-login" type="submit" style="width:100%">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== FUNCIONÁRIO ==================== -->
+<div id="tela-funcionario" class="oculto tela">
+  <div class="topo-app">
+    <div class="marca"><img data-logo-sistema class="oculto" alt="logo"><span data-nome-sistema>Ponto Fácil</span></div>
+    <div>
+      <span id="nome-usuario-logado"></span>
+      <button class="btn-logout pequeno">Sair</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="cartao">
+      <h2 id="func-nome">Funcionário</h2>
+      <p id="func-cargo" style="color:var(--cor-texto-suave)"></p>
+      <div id="contador-offline" class="badge badge-pendente oculto" style="margin-bottom:10px"></div>
+    </div>
+
+    <!-- ABA INÍCIO -->
+    <div id="func-aba-inicio">
+      <div class="cartao status-dia">
+        <div>
+          <div style="color:var(--cor-texto-suave);font-size:0.85rem">Próximo ponto esperado</div>
+          <div class="ponto-atual" id="proximo-ponto-label">—</div>
+        </div>
+      </div>
+      <button id="btn-bater-ponto" class="botao-ponto-grande" onclick="Funcionario.abrirCamera()">📷 Bater Ponto</button>
+      <div class="cartao">
+        <h3>Pontos de hoje</h3>
+        <div id="pontos-hoje-lista"></div>
+      </div>
+    </div>
+
+    <!-- ABA HISTÓRICO -->
+    <div id="func-aba-historico" class="oculto">
+      <div class="cartao">
+        <h3>Meu histórico</h3>
+        <div class="filtros-relatorio">
+          <div><label>De</label><input type="date" id="hist-data-inicio"></div>
+          <div><label>Até</label><input type="date" id="hist-data-fim"></div>
+          <div><button onclick="Funcionario.renderHistorico()">Filtrar</button></div>
+        </div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Dia</th><th>Tipo</th><th>Horário</th><th>Esperado</th><th>Status</th><th>Origem</th></tr></thead>
+            <tbody id="tabela-historico-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA ATESTADO -->
+    <div id="func-aba-atestado" class="oculto">
+      <div class="cartao">
+        <h3>Enviar atestado</h3>
+        <form id="form-atestado" onsubmit="Funcionario.enviarAtestado(event)">
+          <div class="campo-linha">
+            <div><label>Data inicial</label><input type="date" id="atestado-inicio" required></div>
+            <div><label>Data final</label><input type="date" id="atestado-fim" required></div>
+          </div>
+          <label>Observação / motivo</label>
+          <textarea id="atestado-obs" rows="2"></textarea>
+          <label>Arquivo (foto ou PDF)</label>
+          <input type="file" id="atestado-arquivo" accept="image/*,application/pdf" required>
+          <br><br>
+          <button type="submit">Enviar atestado</button>
+        </form>
+      </div>
+      <div class="cartao">
+        <h3>Meus atestados</h3>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Período</th><th>Dias</th><th>Status</th><th>Arquivo</th></tr></thead>
+            <tbody id="tabela-atestados-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA FÉRIAS -->
+    <div id="func-aba-ferias" class="oculto">
+      <div class="cartao">
+        <h3>Minhas férias</h3>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Período</th><th>Dias</th><th>Status</th></tr></thead>
+            <tbody id="tabela-ferias-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" id="nav-funcionario">
+    <button class="ativo" data-aba="inicio">🏠<br>Início</button>
+    <button data-aba="historico">📋<br>Histórico</button>
+    <button data-aba="atestado">📄<br>Atestado</button>
+    <button data-aba="ferias">🏖<br>Férias</button>
+  </nav>
+</div>
+
+<!-- Modal de captura de ponto (câmera) -->
+<div id="modal-ponto" class="oculto modal-fundo">
+  <div class="modal-caixa">
+    <button class="fechar" onclick="Funcionario.fecharModalPonto()">✕</button>
+    <h3>Confirme seu ponto</h3>
+    <div class="camera-wrap">
+      <video id="video-camera" autoplay playsinline muted></video>
+      <img id="foto-capturada" class="oculto" style="width:100%;display:block">
+      <div class="camera-overlay"></div>
+    </div>
+    <canvas id="canvas-foto" class="oculto"></canvas>
+    <br>
+    <button id="btn-confirmar-ponto" class="oculto" style="width:100%" onclick="Funcionario.confirmarPonto()">Confirmar Ponto</button>
+  </div>
+</div>
+
+<!-- ==================== ÁREA ADMINISTRATIVA ==================== -->
+<div id="tela-admin" class="oculto tela">
+  <div class="topo-app">
+    <div class="marca"><img data-logo-sistema class="oculto" alt="logo"><span data-nome-sistema>Ponto Fácil</span> · Admin</div>
+    <div>
+      <span id="nome-usuario-logado-admin"></span>
+      <button class="btn-logout pequeno">Sair</button>
+    </div>
+  </div>
+  <nav class="tabs" id="nav-admin">
+    <button class="tab-btn ativo" data-aba="dashboard">Dashboard</button>
+    <button class="tab-btn" data-aba="funcionarios">Funcionários</button>
+    <button class="tab-btn" data-aba="locais">Locais</button>
+    <button class="tab-btn" data-aba="pontos">Pontos</button>
+    <button class="tab-btn" data-aba="ferias">Férias</button>
+    <button class="tab-btn" data-aba="atestados">Atestados</button>
+    <button class="tab-btn" data-aba="relatorios">Relatórios</button>
+    <button class="tab-btn oculto" id="nav-dev-link">⚙ Configurações do Sistema</button>
+  </nav>
+
+  <div class="container">
+    <!-- DASHBOARD -->
+    <div id="admin-aba-dashboard" class="admin-aba">
+      <div id="dash-cards" class="grid-cards"></div>
+      <div class="cartao"><h3>Ausentes hoje</h3><p id="dash-ausentes"></p></div>
+      <div class="cartao"><h3>Em férias</h3><p id="dash-ferias"></p></div>
+    </div>
+
+    <!-- FUNCIONÁRIOS -->
+    <div id="admin-aba-funcionarios" class="admin-aba oculto">
+      <div class="cartao">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Funcionários</h3>
+          <button onclick="Admin.abrirModalFuncionario(null)">+ Novo Funcionário</button>
+        </div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Cargo</th><th>Depto</th><th>Usuário</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-funcionarios-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOCAIS -->
+    <div id="admin-aba-locais" class="admin-aba oculto">
+      <div class="cartao">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3>Locais Permitidos</h3>
+          <button onclick="Admin.abrirModalLocal(null)">+ Novo Local</button>
+        </div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Endereço</th><th>Coordenadas</th><th>Raio</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-locais-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PONTOS -->
+    <div id="admin-aba-pontos" class="admin-aba oculto">
+      <div class="cartao">
+        <h3>Registros de Ponto</h3>
+        <div class="filtros-relatorio">
+          <div><label>Funcionário</label><select id="filtro-ponto-func"></select></div>
+          <div><label>Status</label>
+            <select id="filtro-ponto-status">
+              <option value="">Todos</option>
+              <option value="valido">Válido</option>
+              <option value="pendente">Pendente</option>
+              <option value="fora_do_local">Fora do local</option>
+              <option value="offline_sincronizado">Offline sincronizado</option>
+              <option value="rejeitado">Rejeitado</option>
+              <option value="ajustado">Ajustado</option>
+            </select>
+          </div>
+          <div><label>De</label><input type="date" id="filtro-ponto-inicio"></div>
+          <div><label>Até</label><input type="date" id="filtro-ponto-fim"></div>
+          <div><button onclick="Admin.renderPontos()">Filtrar</button></div>
+        </div>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Funcionário</th><th>Tipo</th><th>Horário</th><th>Distância</th><th>Status</th><th>Origem</th><th>Foto</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-pontos-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FÉRIAS -->
+    <div id="admin-aba-ferias" class="admin-aba oculto">
+      <div class="cartao">
+        <h3>Cadastrar férias</h3>
+        <form id="form-ferias" onsubmit="Admin.solicitarFerias(event)">
+          <label>Funcionário</label><select id="ferias-func"></select>
+          <div class="campo-linha">
+            <div><label>Data inicial</label><input type="date" id="ferias-inicio" required></div>
+            <div><label>Data final</label><input type="date" id="ferias-fim" required></div>
+          </div>
+          <label>Observação</label><textarea id="ferias-obs" rows="2"></textarea>
+          <br><button type="submit">Cadastrar Férias</button>
+        </form>
+      </div>
+      <div class="cartao">
+        <h3>Férias cadastradas</h3>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Funcionário</th><th>Período</th><th>Dias</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-ferias-admin-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATESTADOS -->
+    <div id="admin-aba-atestados" class="admin-aba oculto">
+      <div class="cartao">
+        <h3>Atestados enviados</h3>
+        <div class="tabela-wrap">
+          <table>
+            <thead><tr><th>Funcionário</th><th>Período</th><th>Dias</th><th>Arquivo</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-atestados-admin-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATÓRIOS -->
+    <div id="admin-aba-relatorios" class="admin-aba oculto">
+      <div class="cartao">
+        <h3>Relatórios</h3>
+        <div class="filtros-relatorio">
+          <div><label>Funcionário</label><select id="rel-func"></select></div>
+          <div><label>Departamento</label><input id="rel-depto" placeholder="(opcional)"></div>
+          <div><label>De</label><input type="date" id="rel-inicio"></div>
+          <div><label>Até</label><input type="date" id="rel-fim"></div>
+          <div><button onclick="Admin.gerarRelatorio()">Gerar Relatório</button></div>
+        </div>
+      </div>
+      <div id="rel-resultado" class="oculto">
+        <div id="rel-resumo" class="grid-cards"></div>
+        <div class="cartao">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+            <button class="secundario" onclick="Admin.exportarCSV()">⬇ CSV</button>
+            <button class="secundario" onclick="Admin.exportarXLSX()">⬇ Excel</button>
+            <button class="secundario" onclick="Admin.exportarPDF()">⬇ PDF</button>
+            <button class="secundario" onclick="Admin.exportarGoogleSheets()">⬇ Google Sheets</button>
+          </div>
+          <div class="tabela-wrap">
+            <table>
+              <thead><tr><th>Funcionário</th><th>Data</th><th>Dia</th><th>Entrada</th><th>S.Almoço</th><th>R.Almoço</th><th>Saída</th><th>Total</th><th>Extra</th><th>Situação</th><th>Saldo</th></tr></thead>
+              <tbody id="tabela-relatorio-corpo"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Funcionário -->
+<div id="modal-funcionario" class="oculto modal-fundo">
+  <div class="modal-caixa">
+    <button class="fechar" onclick="Utils.esconder('modal-funcionario')">✕</button>
+    <h3 id="modal-funcionario-titulo">Novo Funcionário</h3>
+    <form id="form-funcionario" onsubmit="Admin.salvarFuncionario(event)">
+      <input type="hidden" id="ffunc-id">
+      <div class="campo-linha">
+        <div><label>Nome completo</label><input id="ffunc-nome" required></div>
+        <div><label>CPF</label><input id="ffunc-cpf"></div>
+      </div>
+      <div class="campo-linha">
+        <div><label>Cargo</label><input id="ffunc-cargo"></div>
+        <div><label>Departamento</label><input id="ffunc-depto"></div>
+      </div>
+      <div class="campo-linha">
+        <div><label>E-mail</label><input id="ffunc-email" type="email"></div>
+        <div><label>Telefone</label><input id="ffunc-telefone"></div>
+      </div>
+      <div id="ffunc-senha-linha" class="campo-linha">
+        <div><label>Usuário de acesso</label><input id="ffunc-usuario" required></div>
+        <div><label>Senha inicial</label><input id="ffunc-senha" type="password"></div>
+      </div>
+      <div class="campo-linha">
+        <div><label>Entrada</label><input id="ffunc-entrada" type="time"></div>
+        <div><label>Saída Almoço</label><input id="ffunc-saida-almoco" type="time"></div>
+        <div><label>Retorno Almoço</label><input id="ffunc-retorno-almoco" type="time"></div>
+        <div><label>Saída Final</label><input id="ffunc-saida-final" type="time"></div>
+      </div>
+      <div class="campo-linha">
+        <div><label>Carga diária</label><input id="ffunc-carga-diaria" placeholder="08:00"></div>
+        <div><label>Carga semanal</label><input id="ffunc-carga-semanal" placeholder="44:00"></div>
+        <div><label>Data admissão</label><input id="ffunc-admissao" type="date"></div>
+      </div>
+      <label>Dias trabalhados</label>
+      <div class="campo-linha">
+        <label><input type="checkbox" class="ffunc-dia" value="Seg" style="width:auto"> Seg</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Ter" style="width:auto"> Ter</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Qua" style="width:auto"> Qua</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Qui" style="width:auto"> Qui</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Sex" style="width:auto"> Sex</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Sab" style="width:auto"> Sáb</label>
+        <label><input type="checkbox" class="ffunc-dia" value="Dom" style="width:auto"> Dom</label>
+      </div>
+      <label>Locais autorizados</label>
+      <select id="ffunc-locais" multiple size="3"></select>
+      <label><input type="checkbox" id="ffunc-offline" style="width:auto"> Permite bater ponto offline</label>
+      <label>Observações</label>
+      <textarea id="ffunc-obs" rows="2"></textarea>
+      <br><button type="submit" style="width:100%">Salvar Funcionário</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Local -->
+<div id="modal-local" class="oculto modal-fundo">
+  <div class="modal-caixa">
+    <button class="fechar" onclick="Utils.esconder('modal-local')">✕</button>
+    <h3 id="modal-local-titulo">Novo Local</h3>
+    <form id="form-local" onsubmit="Admin.salvarLocal(event)">
+      <input type="hidden" id="floc-id">
+      <label>Nome do local</label><input id="floc-nome" required>
+      <label>Endereço</label><input id="floc-endereco">
+      <div class="campo-linha">
+        <div><label>Latitude</label><input id="floc-lat" type="number" step="any" required></div>
+        <div><label>Longitude</label><input id="floc-lng" type="number" step="any" required></div>
+        <div><label>Raio (metros)</label><input id="floc-raio" type="number" value="100" required></div>
+      </div>
+      <button type="button" class="secundario" onclick="Admin.usarMinhaLocalizacao()">📍 Usar minha localização atual</button>
+      <label>Status</label>
+      <select id="floc-status"><option value="ativo">Ativo</option><option value="inativo">Inativo</option></select>
+      <label>Observações</label><textarea id="floc-obs" rows="2"></textarea>
+      <br><button type="submit" style="width:100%">Salvar Local</button>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== ÁREA DO DESENVOLVEDOR ==================== -->
+<div id="tela-dev" class="oculto tela">
+  <div class="topo-app">
+    <div class="marca">⚙ Área do Desenvolvedor</div>
+    <div>
+      <button class="pequeno secundario" onclick="Utils.esconder('tela-dev'); Utils.mostrar('tela-admin')">← Voltar ao Admin</button>
+      <button class="btn-logout pequeno">Sair</button>
+    </div>
+  </div>
+  <nav class="tabs" id="nav-dev">
+    <button class="tab-btn ativo" data-aba="visual">Identidade Visual</button>
+    <button class="tab-btn" data-aba="integracoes">Integrações</button>
+    <button class="tab-btn" data-aba="regras">Regras do Sistema</button>
+    <button class="tab-btn" data-aba="mensagens">Mensagens e Lembretes</button>
+  </nav>
+
+  <div class="container">
+    <div id="dev-aba-visual" class="dev-aba cartao">
+      <h3>Identidade Visual</h3>
+      <form id="form-visual" onsubmit="Desenvolvedor.salvarVisual(event)">
+        <label>Nome do sistema</label><input id="dev-nome-sistema">
+        <div class="campo-linha">
+          <div><label>Cor primária</label><input id="dev-cor-primaria" type="color"></div>
+          <div><label>Cor secundária</label><input id="dev-cor-secundaria" type="color"></div>
+        </div>
+        <div class="campo-linha">
+          <div><label>Tema do painel Admin</label><select id="dev-tema-admin"><option value="claro">Claro</option><option value="escuro">Escuro</option></select></div>
+          <div><label>Tema do app Funcionário</label><select id="dev-tema-func"><option value="claro">Claro</option><option value="escuro">Escuro</option></select></div>
+        </div>
+        <br><button type="submit">Salvar Identidade Visual</button>
+      </form>
+      <hr>
+      <h3>Logo da empresa</h3>
+      <img id="dev-logo-preview" style="height:60px;display:block;margin-bottom:10px;border-radius:8px">
+      <input type="file" accept="image/*" onchange="Desenvolvedor.enviarLogo(event)">
+    </div>
+
+    <div id="dev-aba-integracoes" class="dev-aba cartao oculto">
+      <h3>Integrações (Google Sheets / Drive)</h3>
+      <form id="form-integracoes" onsubmit="Desenvolvedor.salvarIntegracoes(event)">
+        <label>ID da planilha (Google Sheets)</label><input id="dev-sheet-id">
+        <label>ID da pasta do Drive (fotos dos pontos)</label><input id="dev-pasta-fotos">
+        <label>ID da pasta do Drive (atestados)</label><input id="dev-pasta-atestados">
+        <p style="color:var(--cor-texto-suave);font-size:0.85rem">Estes valores já são preenchidos automaticamente pela função <code>configurarSistema()</code>. Só altere se for migrar para outra planilha/pasta.</p>
+        <button type="submit">Salvar Integrações</button>
+      </form>
+    </div>
+
+    <div id="dev-aba-regras" class="dev-aba cartao oculto">
+      <h3>Regras Gerais do Sistema</h3>
+      <form id="form-regras" onsubmit="Desenvolvedor.salvarRegras(event)">
+        <div class="campo-linha">
+          <div><label>Tolerância de atraso (min)</label><input id="dev-tolerancia-atraso" type="number"></div>
+          <div><label>Tolerância saída antecipada (min)</label><input id="dev-tolerancia-saida" type="number"></div>
+        </div>
+        <div class="campo-linha">
+          <div><label>Regra de hora extra</label>
+            <select id="dev-regra-hora-extra">
+              <option value="apos_jornada">Após o fim da jornada</option>
+              <option value="apos_50min">Após 50 min extras</option>
+              <option value="manual">Somente lançamento manual</option>
+            </select>
+          </div>
+          <div><label>% adicional de hora extra</label><input id="dev-percentual-extra" type="number"></div>
+        </div>
+        <label><input type="checkbox" id="dev-banco-horas" style="width:auto"> Banco de horas ativo</label>
+        <label><input type="checkbox" id="dev-ponto-offline" style="width:auto"> Permitir bater ponto offline</label>
+        <label><input type="checkbox" id="dev-foto-obrigatoria" style="width:auto"> Foto obrigatória</label>
+        <label><input type="checkbox" id="dev-geo-obrigatoria" style="width:auto"> Geolocalização obrigatória</label>
+        <label>Distância máxima permitida (metros)</label><input id="dev-distancia-maxima" type="number">
+        <label><input type="checkbox" id="dev-permite-justificativa" style="width:auto"> Permitir justificativa de ponto</label>
+        <label><input type="checkbox" id="dev-admin-aprova-justificativa" style="width:auto"> Administrador precisa aprovar justificativa</label>
+        <label>Se o funcionário bater ponto fora do local...</label>
+        <select id="dev-fora-raio-acao">
+          <option value="bloquear">Bloquear o registro</option>
+          <option value="permitir_com_justificativa">Permitir com justificativa</option>
+        </select>
+        <br><br><button type="submit">Salvar Regras</button>
+      </form>
+    </div>
+
+    <div id="dev-aba-mensagens" class="dev-aba cartao oculto">
+      <h3>Mensagens e Lembretes</h3>
+      <form id="form-mensagens" onsubmit="Desenvolvedor.salvarMensagens(event)">
+        <label>Mensagem de boas-vindas</label>
+        <textarea id="dev-mensagem-boas-vindas" rows="2"></textarea>
+        <label><input type="checkbox" id="dev-lembretes-ativos" style="width:auto"> Lembretes de ponto ativos</label>
+        <br><button type="submit">Salvar Mensagens</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bibliotecas de exportação (gratuitas, via CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<script src="config.js"></script>
+<script src="db.js"></script>
+<script src="api.js"></script>
+<script src="utils.js"></script>
+<script src="auth.js"></script>
+<script src="funcionario.js"></script>
+<script src="admin.js"></script>
+<script src="desenvolvedor.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
