@@ -10,6 +10,7 @@ const Desenvolvedor = {
       btn.addEventListener('click', () => this.trocarAba(btn.dataset.aba));
     });
     await this.carregarConfig();
+    await this.carregarModoColetivo();
     await this.trocarAba('visual');
   },
 
@@ -123,5 +124,29 @@ const Desenvolvedor = {
     const resp = await Api.chamar('config.salvar', corpo);
     if (!resp.sucesso) return Utils.toast(resp.erro, 'erro');
     Utils.toast('Mensagens salvas!', 'sucesso');
+  },
+
+  // ------------------- MODO COLETIVO -------------------
+  async carregarModoColetivo() {
+    const resp = await Api.chamar('coletivo.obterConfig', {});
+    const el = document.getElementById('coletivo-status-atual');
+    if (!el) return;
+    if (resp.sucesso && resp.dados.configurado) {
+      el.textContent = `Dispositivo configurado com o usuário "${resp.dados.usuario}".`;
+      document.getElementById('dev-coletivo-usuario').value = resp.dados.usuario;
+    } else {
+      el.textContent = 'Ainda não configurado — nenhum dispositivo de Modo Coletivo cadastrado.';
+    }
+  },
+
+  async salvarModoColetivo(ev) {
+    ev.preventDefault();
+    const usuario = document.getElementById('dev-coletivo-usuario').value.trim();
+    const senha = document.getElementById('dev-coletivo-senha').value;
+    const resp = await Api.chamar('coletivo.configurar', { usuario, senha });
+    if (!resp.sucesso) return Utils.toast(resp.erro, 'erro');
+    Utils.toast('Modo Coletivo configurado! Faça login nesse dispositivo com esse usuário e senha para abrir a tela de bater ponto por CPF.', 'sucesso');
+    document.getElementById('dev-coletivo-senha').value = '';
+    await this.carregarModoColetivo();
   }
 };
