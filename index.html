@@ -147,6 +147,53 @@
   </div>
 </div>
 
+<!-- ==================== MODO COLETIVO (dispositivo compartilhado) ==================== -->
+<div id="tela-coletivo" class="oculto tela">
+  <div class="topo-app">
+    <div class="marca"><img data-logo-sistema class="oculto" alt="logo"><span data-nome-sistema>Ponto Fácil</span> · Modo Coletivo</div>
+    <div>
+      <button class="btn-logout pequeno">Sair do Modo Coletivo</button>
+    </div>
+  </div>
+
+  <div class="container" style="max-width:480px;margin:0 auto">
+    <!-- ETAPA 1: digitar o CPF -->
+    <div id="coletivo-etapa-cpf" class="cartao" style="text-align:center">
+      <h2 style="margin-top:0">Bater ponto</h2>
+      <p style="color:var(--cor-texto-suave)">Digite seu CPF para continuar</p>
+      <form id="form-coletivo-cpf" onsubmit="Coletivo.continuarComCPF(event)">
+        <input id="coletivo-cpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00"
+               style="font-size:1.4rem;text-align:center;letter-spacing:1px" required autofocus>
+        <br><br>
+        <button type="submit" class="botao-ponto-grande" style="width:100%">Continuar</button>
+      </form>
+    </div>
+
+    <!-- ETAPA 2: câmera + confirmação -->
+    <div id="coletivo-etapa-camera" class="cartao oculto" style="text-align:center">
+      <h3 id="coletivo-nome-funcionario">Confirme sua foto</h3>
+      <div class="camera-wrap">
+        <video id="video-coletivo" autoplay playsinline muted></video>
+        <img id="foto-coletivo" class="oculto" style="width:100%;display:block">
+        <div class="camera-overlay"></div>
+      </div>
+      <canvas id="canvas-coletivo" class="oculto"></canvas>
+      <br>
+      <button id="btn-coletivo-capturar" class="oculto" style="width:100%" onclick="Coletivo.capturarFotoAgora()">📸 Bater Foto</button>
+      <button id="btn-coletivo-confirmar" class="oculto" style="width:100%" onclick="Coletivo.confirmarPonto()">Confirmar Ponto</button>
+      <br><br>
+      <button class="secundario" style="width:100%" onclick="Coletivo.cancelar()">Cancelar</button>
+    </div>
+
+    <!-- ETAPA 3: resultado (unico feedback grande, some sozinho) -->
+    <div id="coletivo-etapa-resultado" class="cartao oculto" style="text-align:center">
+      <div id="coletivo-resultado-icone" style="font-size:3rem"></div>
+      <h2 id="coletivo-resultado-titulo"></h2>
+      <p id="coletivo-resultado-detalhe" style="color:var(--cor-texto-suave)"></p>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== ÁREA ADMINISTRATIVA ==================== -->
 <div id="tela-admin" class="oculto tela">
   <div class="topo-app">
@@ -237,7 +284,7 @@
       </div>
     </div>
 
-    <!-- FÉRIAS -->
+    <!-- DÉRIAS -->
     <div id="admin-aba-ferias" class="admin-aba oculto">
       <div class="cartao">
         <h3>Cadastrar férias</h3>
@@ -399,6 +446,7 @@
     <button class="tab-btn" data-aba="integracoes">Integrações</button>
     <button class="tab-btn" data-aba="regras">Regras do Sistema</button>
     <button class="tab-btn" data-aba="mensagens">Mensagens e Lembretes</button>
+    <button class="tab-btn" data-aba="coletivo">Modo Coletivo</button>
   </nav>
 
   <div class="container">
@@ -475,6 +523,21 @@
         <br><button type="submit">Salvar Mensagens</button>
       </form>
     </div>
+
+    <div id="dev-aba-coletivo" class="dev-aba cartao oculto">
+      <h3>Modo Coletivo (bater ponto por CPF)</h3>
+      <p style="color:var(--cor-texto-suave)">Configure aqui o usuário e a senha de um dispositivo compartilhado
+        (tablet, celular ou PC fixado — por exemplo, na entrada). Ao fazer login nesse aparelho com esse usuário e
+        senha, ele abre direto a tela do Modo Coletivo: cada funcionário digita o próprio CPF, tira a foto e o ponto
+        é registrado automaticamente — sem precisar de login individual. É mais uma opção de bater ponto, além do
+        login normal de cada funcionário no próprio celular.</p>
+      <p id="coletivo-status-atual" style="font-weight:600"></p>
+      <form id="form-coletivo" onsubmit="Desenvolvedor.salvarModoColetivo(event)">
+        <label>Usuário do dispositivo</label><input id="dev-coletivo-usuario" autocomplete="off" required>
+        <label>Senha do dispositivo</label><input id="dev-coletivo-senha" type="password" autocomplete="new-password" required>
+        <br><button type="submit">Salvar Modo Coletivo</button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -491,6 +554,7 @@
 <script src="funcionario.js"></script>
 <script src="admin.js"></script>
 <script src="desenvolvedor.js"></script>
+<script src="coletivo.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
