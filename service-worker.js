@@ -6,7 +6,7 @@
  * ponto real precisa ser processado no servidor assim que houver conexão.
  */
 
-const CACHE_NOME = 'ponto-facil-v2';
+const CACHE_NOME = 'ponto-facil-v3';
 const ARQUIVOS_APP_SHELL = [
   './',
   './index.html',
@@ -20,6 +20,7 @@ const ARQUIVOS_APP_SHELL = [
   './funcionario.js',
   './admin.js',
   './desenvolvedor.js',
+  './coletivo.js',
   './app.js'
 ];
 
