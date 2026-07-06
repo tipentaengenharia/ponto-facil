@@ -76,19 +76,33 @@ const Funcionario = {
   },
 
   // ------------------- BATER PONTO -------------------
+  /** Abre o modal e liga a câmera, mostrando o preview ao vivo para o funcionário se posicionar. */
   async abrirCamera() {
     Utils.mostrar('modal-ponto');
+    Utils.mostrar('video-camera');
+    Utils.esconder('foto-capturada');
+    Utils.esconder('btn-confirmar-ponto');
+    Utils.esconder('btn-capturar-foto');
     try {
-      const foto = await Utils.capturarFoto(document.getElementById('video-camera'), document.getElementById('canvas-foto'));
-      document.getElementById('foto-capturada').src = foto;
-      document.getElementById('foto-capturada').dataset.base64 = foto;
-      Utils.esconder('video-camera');
-      Utils.mostrar('foto-capturada');
-      Utils.mostrar('btn-confirmar-ponto');
+      await Utils.iniciarCamera(document.getElementById('video-camera'));
+      Utils.mostrar('btn-capturar-foto');
     } catch (e) {
       Utils.toast('Não foi possível acessar a câmera: ' + e.message, 'erro');
       this.fecharModalPonto();
     }
+  },
+
+  /** Chamado quando o funcionário já se posicionou e clica em "Bater Foto". */
+  capturarFotoAgora() {
+    const videoEl = document.getElementById('video-camera');
+    const foto = Utils.capturarFrame(videoEl, document.getElementById('canvas-foto'));
+    document.getElementById('foto-capturada').src = foto;
+    document.getElementById('foto-capturada').dataset.base64 = foto;
+    Utils.pararCamera(videoEl);
+    Utils.esconder('video-camera');
+    Utils.esconder('btn-capturar-foto');
+    Utils.mostrar('foto-capturada');
+    Utils.mostrar('btn-confirmar-ponto');
   },
 
   fecharModalPonto() {
@@ -96,6 +110,7 @@ const Funcionario = {
     Utils.mostrar('video-camera');
     Utils.esconder('foto-capturada');
     Utils.esconder('btn-confirmar-ponto');
+    Utils.esconder('btn-capturar-foto');
     Utils.esconder('modal-ponto');
   },
 
@@ -124,7 +139,11 @@ const Funcionario = {
     if (navigator.onLine) {
       const resp = await Api.chamar('pontos.registrar', dadosPonto);
       if (resp.sucesso) {
-        Utils.toast(`Ponto "${resp.dados.tipoPontoLabel}" registrado às ${resp.dados.horario}!`, 'sucesso');
+        if (resp.dados.status === 'pendente') {
+          Utils.toast(`Ponto "${resp.dados.tipoPontoLabel}" registrado às ${resp.dados.horario}. Está fora do horário/local esperado e aguarda aprovação do administrador.`, 'aviso');
+        } else {
+          Utils.toast(`Ponto "${resp.dados.tipoPontoLabel}" registrado às ${resp.dados.horario}!`, 'sucesso');
+        }
         this.fecharModalPonto();
         await this.renderInicio();
         btn.disabled = false; btn.textContent = 'Confirmar Ponto';
