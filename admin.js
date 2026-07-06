@@ -238,11 +238,14 @@ const Admin = {
     corpo.innerHTML = '';
     resp.dados.forEach((p) => {
       const tr = document.createElement('tr');
+      const temLocalizacao = p.Latitude !== '' && p.Latitude !== undefined && p.Latitude !== null && p.Longitude !== '' && p.Longitude !== undefined && p.Longitude !== null;
+      const linkLocalizacao = temLocalizacao ? `https://www.google.com/maps?q=${p.Latitude},${p.Longitude}` : '';
       tr.innerHTML = `<td>${Utils.formatarDataBR(p.Data)}</td><td>${p.NomeFuncionario}</td><td>${p.TipoPonto.replace('_', ' ')}</td>
         <td>${p.HorarioRegistrado}</td><td>${p.DistanciaLocal !== '' ? p.DistanciaLocal + 'm' : '-'}</td>
         <td><span class="badge badge-${p.StatusPonto}">${p.StatusPonto}</span></td>
         <td>${p.Origem === 'offline' ? '📴' : '🌐'}</td>
         <td>${p.LinkFoto ? `<a href="${p.LinkFoto}" target="_blank">ver foto</a>` : '-'}</td>
+        <td>${temLocalizacao ? `<a href="${linkLocalizacao}" target="_blank" title="Abrir no Google Maps (${p.StatusLocalizacao === 'fora_do_local' ? 'fora do local' : 'dentro do local'})">📍 ver local</a>` : '-'}</td>
         <td>
           <button class="pequeno sucesso" data-acao="aprovar" data-id="${p.ID}">✔</button>
           <button class="pequeno perigo" data-acao="rejeitar" data-id="${p.ID}">✘</button>
