@@ -32,21 +32,27 @@ const Utils = {
     return new Date();
   },
 
-  /** Captura uma foto usando a câmera do dispositivo (getUserMedia) e retorna um data URL base64 JPEG. */
-  async capturarFoto(videoEl, canvasEl) {
+  /**
+   * Liga a câmera do dispositivo (getUserMedia) e exibe o preview ao vivo no
+   * elemento de vídeo, sem capturar nada ainda. Isso dá tempo para o
+   * funcionário se posicionar antes de bater a foto (ver capturarFrame).
+   */
+  async iniciarCamera(videoEl) {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
       audio: false
     });
     videoEl.srcObject = stream;
     await videoEl.play();
-    // pequena espera para o sensor ajustar exposição
-    await new Promise((r) => setTimeout(r, 350));
+    return stream;
+  },
+
+  /** Captura o frame atual do preview de vídeo (já em execução) e retorna um data URL base64 JPEG. */
+  capturarFrame(videoEl, canvasEl) {
     canvasEl.width = videoEl.videoWidth || 480;
     canvasEl.height = videoEl.videoHeight || 360;
     const ctx = canvasEl.getContext('2d');
     ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
-    stream.getTracks().forEach((t) => t.stop());
     return canvasEl.toDataURL('image/jpeg', 0.75);
   },
 
